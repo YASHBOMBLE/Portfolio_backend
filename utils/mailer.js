@@ -1,21 +1,19 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
-
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: Number(process.env.SMTP_PORT) || 587,
   secure: process.env.SMTP_SECURE === 'true', // true for port 465, false for 587
-    family: 4,
-
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASSWORD,
   },
-  tls: {
-    rejectUnauthorized: false,
-  },
-  connectionTimeout: 10000
+  // Render's outbound network can't route to Gmail's IPv6 SMTP address,
+  // which causes ENETUNREACH even though credentials are fine. Forcing
+  // IPv4 (family: 4) makes Node resolve smtp.gmail.com to an IPv4 address
+  // instead, which Render can reach.
+  family: 4,
 });
 
 // Verify SMTP connection once on startup so misconfiguration is obvious immediately
