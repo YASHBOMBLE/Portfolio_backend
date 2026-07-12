@@ -1,6 +1,5 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config();
-family : 6
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -10,8 +9,8 @@ const transporter = nodemailer.createTransport({
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASSWORD,
   },
-  family : 6,
-    connectionTimeout: 10000
+  family: 4, // force IPv4 — Render can't route to Gmail's IPv6 address (was 6, which is wrong)
+  connectionTimeout: 10000,
 });
 
 // Verify SMTP connection once on startup so misconfiguration is obvious immediately
