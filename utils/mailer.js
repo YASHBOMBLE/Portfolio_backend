@@ -10,7 +10,8 @@ const transporter = nodemailer.createTransport({
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASSWORD,
   },
-  family : 6
+  family : 6,
+    connectionTimeout: 10000
 });
 
 // Verify SMTP connection once on startup so misconfiguration is obvious immediately
