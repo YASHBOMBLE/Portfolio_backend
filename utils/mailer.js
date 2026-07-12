@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
   // which causes ENETUNREACH even though credentials are fine. Forcing
   // IPv4 (family: 4) makes Node resolve smtp.gmail.com to an IPv4 address
   // instead, which Render can reach.
-  family: 4,
+  family: 6,
 });
 
 // Verify SMTP connection once on startup so misconfiguration is obvious immediately
